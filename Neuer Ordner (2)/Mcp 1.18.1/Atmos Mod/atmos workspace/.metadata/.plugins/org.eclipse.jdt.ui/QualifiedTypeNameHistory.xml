@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="net.minecraftforge.fml.common.Mod"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.common.MinecraftForge"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.item.CreativeModeTab"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.registries.DeferredRegister"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.registries.ForgeRegistries"/>
+    <fullyQualifiedTypeName name="me.phil.sieben.it.Main"/>
+    <fullyQualifiedTypeName name="com.google.common.base.Supplier"/>
+    <fullyQualifiedTypeName name="me.phil.sieben.it.init.ItemInit"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.eventbus.api.IEventBus"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.fml.javafmlmod.FMLJavaModLanguageProvider"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext"/>
+    <fullyQualifiedTypeName name="java.util.function.Function"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.registries.RegistryObject"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.level.block.state.BlockBehaviour"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.level.block.state.BlockBehaviour.Properties"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.level.material.Material"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.level.material.MaterialColor"/>
+    <fullyQualifiedTypeName name="me.phil.sieben.it.init.BlockInit"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.level.block.SoundType"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.item.BlockItem"/>
+    <fullyQualifiedTypeName name="me.phil.sieben.it.init.TrampolineInit"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.phys.shapes.VoxelShape"/>
+    <fullyQualifiedTypeName name="java.util.stream.Stream"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.level.ClipContext.Block"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.client.event.ColorHandlerEvent.Block"/>
+    <fullyQualifiedTypeName name="org.apache.commons.compress.compressors.lz77support.LZ77Compressor.Block"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.level.block.Block"/>
+    <fullyQualifiedTypeName name="me.phil.sieben.it.init.VodooInit"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.food.FoodProperties.Builder"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.food.FoodProperties"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.item.Item"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.item.Item.Properties"/>
+    <fullyQualifiedTypeName name="java.lang.Override"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.InteractionResult"/>
+    <fullyQualifiedTypeName name="net.minecraft.world.item.Rarity"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.eventbus.api.SubscribeEvent"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.client.event.RenderGameOverlayEvent"/>
+    <fullyQualifiedTypeName name="net.minecraft.resources.ResourceLocation"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.api.distmarker.OnlyIn"/>
+    <fullyQualifiedTypeName name="net.minecraftforge.api.distmarker.Dist"/>
+    <fullyQualifiedTypeName name="net.minecraft.client.Minecraft"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,59 @@
+{
+	"parent": "atmos:item/vodoo_glace",
+	"textures": {
+		"2": "atmos:item/vodoo_glace",
+		"particle": "atmos:item/vodoo_glace"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0.4],
+			"to": [16, 0, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"east": {"uv": [0, 0, 15.6, 0], "texture": "#2"},
+				"south": {"uv": [0, 0, 16, 0], "texture": "#2"},
+				"west": {"uv": [0, 0, 15.6, 0], "texture": "#2"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#2"},
+				"down": {"uv": [0, 0, 0, 0.6], "texture": "#2"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [33, 0, 3],
+			"translation": [-0.5, 6.25, -1.5],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [92, 0, 0],
+			"translation": [0, 5, 6.5],
+			"scale": [0.75, 0.75, 0.75]
+		},
+		"firstperson_righthand": {
+			"rotation": [63, -1, 0],
+			"translation": [3.25, 6.25, 0],
+			"scale": [0.81, 0.81, 0.81]
+		},
+		"firstperson_lefthand": {
+			"rotation": [78, 0, 0],
+			"translation": [6.75, 3.75, 0],
+			"scale": [1, 1.11, 1]
+		},
+		"ground": {
+			"translation": [0, 5.25, 0]
+		},
+		"gui": {
+			"rotation": [75, 0, 0],
+			"translation": [0, 4.25, 0]
+		},
+		"head": {
+			"rotation": [89, 0, 0],
+			"translation": [0, 4.25, 4],
+			"scale": [1.34, 1.34, 1.34]
+		},
+		"fixed": {
+			"rotation": [-92, -180, 0],
+			"translation": [-0.25, 0.75, -8.5]
+		}
+	}
+}

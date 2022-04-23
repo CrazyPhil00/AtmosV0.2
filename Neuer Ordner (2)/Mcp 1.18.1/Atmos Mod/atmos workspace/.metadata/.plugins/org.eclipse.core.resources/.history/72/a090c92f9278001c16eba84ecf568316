@@ -1,0 +1,6 @@
+{
+	"item.atmos.example_item": "Example Item",
+	"itemGroup.atmos": "Glace items",
+	"block.atmos.example_block": "Example Block",
+	"block.atmos.trampoline_block" : "Trampoline"
+}

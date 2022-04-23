@@ -1,0 +1,6 @@
+{
+	"parrent": "item/generated",
+	"textures": {
+	 	"layer0": "atmos:item/example_item"
+	}
+}

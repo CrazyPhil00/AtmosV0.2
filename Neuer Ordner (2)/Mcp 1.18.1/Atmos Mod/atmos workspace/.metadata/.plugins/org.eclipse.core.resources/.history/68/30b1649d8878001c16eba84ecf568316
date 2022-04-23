@@ -1,0 +1,6 @@
+{
+	"parent": "block/cube_all",
+	"textures": {
+		"all": "atmos:block/trampoline_block"
+	}
+}

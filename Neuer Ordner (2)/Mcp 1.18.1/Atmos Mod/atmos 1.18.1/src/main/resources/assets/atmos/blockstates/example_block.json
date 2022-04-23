@@ -1,0 +1,7 @@
+{
+	"variants": {
+		"": {
+			"model": "atmos:block/example_block"
+		}
+	}
+}
