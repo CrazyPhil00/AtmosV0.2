@@ -22,5 +22,23 @@ public class LeftClick {
 
     }
 
+    public static void rightclick(){
+
+        Robot bot;
+        try {
+
+            bot = new Robot();
+            bot.mousePress(InputEvent.BUTTON3_MASK);
+            bot.mouseRelease(InputEvent.BUTTON3_MASK);
+
+        }
+
+        catch (AWTException e) {
+
+            e.printStackTrace();
+        }
+
+    }
+
 }
 

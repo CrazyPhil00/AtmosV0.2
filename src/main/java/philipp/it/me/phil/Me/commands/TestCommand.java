@@ -11,9 +11,22 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.StringUtils;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
+import philipp.it.me.phil.Me.utils.ConfigHandler;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class TestCommand extends CommandBase {
+
+    public static ArrayList<Color> colors = new ArrayList<>();
+    public static ArrayList<String> colorName = new ArrayList<>();
+
     @Override
     public String getName() {
         return "test";
@@ -26,11 +39,32 @@ public class TestCommand extends CommandBase {
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-        double firstattackspeed = getAttackSpeed(Minecraft.getMinecraft().player.getHeldItem(EnumHand.MAIN_HAND).getItem());
-        double attackspeedinTicks = (firstattackspeed * 100) / 2 /2 ;
-        String realattackspeed = String.valueOf(attackspeedinTicks).replace("-", "");
-        double attackspeed = Double.parseDouble(realattackspeed);
-        sender.sendMessage(new TextComponentString(realattackspeed));
+        if (args[0].equalsIgnoreCase("color")) {
+            for (Property c : ConfigHandler.config.getCategory("Color").getOrderedValues()) {
+                String[] rgbString = c.getString().split(",");
+
+                int red = parseInt(rgbString[0]);
+                int green = parseInt(rgbString[1]);
+                int blue = parseInt(rgbString[2]);
+
+                Color color = new Color(red, green,blue);
+                colors.add(color);
+                colorName.add(c.getName());
+
+
+
+            }
+
+            //sender.sendMessage(new TextComponentString(colors.toString()));
+        }else if (args[0].equalsIgnoreCase("komma")) {
+
+            int[] komma = {ConfigHandler.getInt("Color", "RedR"), ConfigHandler.getInt("Color", "RedG"), ConfigHandler.getInt("Color", "RedB")};
+            sender.sendMessage(new TextComponentString(Arrays.toString(komma)));
+        }
+
+
+
+
     }
 
     @Override
@@ -38,32 +72,4 @@ public class TestCommand extends CommandBase {
         return 0;
     }
 
-
-    public double getAttackSpeed(Item item) {
-        double x = 0;
-        double y = 0;
-        if (item.getAttributeModifiers(EntityEquipmentSlot.MAINHAND, new ItemStack(item)).containsKey("generic.attackSpeed")) {
-            for (AttributeModifier mod : item.getAttributeModifiers(EntityEquipmentSlot.MAINHAND, new ItemStack(item)).get("generic.attackSpeed")) {
-                if (mod.getOperation() == 0) {
-                    x += mod.getAmount();
-                }
-            }
-
-            y = x;
-
-            for (AttributeModifier mod : item.getAttributeModifiers(EntityEquipmentSlot.MAINHAND, new ItemStack(item)).get("generic.attackSpeed")) {
-                if (mod.getOperation() == 1) {
-                    y += x * mod.getAmount();
-                }
-            }
-
-            for (AttributeModifier mod : item.getAttributeModifiers(EntityEquipmentSlot.MAINHAND, new ItemStack(item)).get("generic.attackSpeed")) {
-                if (mod.getOperation() == 2) {
-                    y += y * mod.getAmount();
-                }
-            }
-        }
-
-        return y;
-    }
 }

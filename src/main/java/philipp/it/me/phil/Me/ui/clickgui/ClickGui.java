@@ -141,10 +141,12 @@ public class ClickGui extends GuiScreen {
                             if (m.hasDelaySetting()) {
                                 //delay settings
                                 if (mouseButton == 0) {
-                                    m.setDelay(m.getDelay() + 10);
+                                    if (isShiftKeyDown()) m.setDelay(m.getDelay() + 5);
+                                    else m.setDelay(m.getDelay() + 10);
                                 }
                                 if (mouseButton == 1) {
-                                    m.setDelay(m.getDelay() - 10);
+                                    if (isShiftKeyDown()) m.setDelay(m.getDelay() - 5);
+                                    else m.setDelay(m.getDelay() - 10);
                                 }
                             }
                         } else if (mouseX >= rangePosX && mouseX <= rangePosX + fr.getStringWidth(String.valueOf(m.getDelay())) && mouseY >= rangePosY && mouseY <= rangePosY + 9) {

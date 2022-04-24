@@ -11,6 +11,7 @@ import philipp.it.me.phil.Me.Mod;
 import philipp.it.me.phil.Me.listener.EventRenderGUI;
 import philipp.it.me.phil.Me.module.Module;
 import philipp.it.me.phil.Me.module.keystrokes.MouseButton;
+import philipp.it.me.phil.Me.ui.customize.Colors;
 import philipp.it.me.phil.Me.ui.customize.CustomizeScreen;
 
 import java.awt.*;
@@ -24,7 +25,7 @@ public class Hud extends Gui {
     public static int modulesPosX, modulesPosY;
 
     public static int FpsX = 5, FpsY = 565, CordX = 5, CordY = 583;
-    public static int textColor = -1, backgroundColor = 0x30000000;
+    public static int backgroundColor = 0x30000000;
     public static int posX, posY;
 
     public static class ModuleComparator implements Comparator<Module> {
@@ -80,11 +81,11 @@ public class Hud extends Gui {
             if (Minecraft.getMinecraft().isFullScreen()) {
                 //cord
                 Gui.drawRect(CordX - 2, CordY - 3, CordX + fr.getStringWidth("PosX : " + X + ", PosY : " + Y + ", PosZ : " + Z + "") + 2, CordY + 12, backgroundColor);
-                fr.drawString((CustomizeScreen.isActive() ? "PosX : XXX, PosY : YYY, PosZ : ZZZ" : "PosX : " + X + ", PosY : " + Y + ", PosZ : " + Z + ""), CordX, CordY, textColor);
+                fr.drawString((CustomizeScreen.isActive() ? "PosX : XXX, PosY : YYY, PosZ : ZZZ" : "PosX : " + X + ", PosY : " + Y + ", PosZ : " + Z + ""), CordX, CordY, Colors.getCoordColor().getRGB());
 
                 //Fps
                 Gui.drawRect(FpsX - 2, FpsY - 3, FpsX + fr.getStringWidth("FPS : " + Minecraft.getDebugFPS() + 2) , FpsY + 11, backgroundColor);
-                fr.drawString("FPS : " + (CustomizeScreen.isActive() ? "XXX" : Minecraft.getDebugFPS()), FpsX, FpsY, textColor);
+                fr.drawString("FPS : " + (CustomizeScreen.isActive() ? "XXX" : Minecraft.getDebugFPS()), FpsX, FpsY, Colors.getFpsColor().getRGB());
             }
         }
 
@@ -94,14 +95,14 @@ public class Hud extends Gui {
             final int[] counter = {1};
             if (CustomizeScreen.isActive()) {
                 posX = sr.getScaledWidth() - fr.getStringWidth("MODULE NAME") - 2 + modulesPosX;
-                fr.drawStringWithShadow("MODULE NAME", posX, posY, textColor);
+                fr.drawStringWithShadow("MODULE NAME", posX, posY, Colors.getModuleColor().getRGB());
             } else {
 
                 for (Module mod : Mod.moduleManager.getModuleList()) {
                     if (!mod.getName().equalsIgnoreCase("TabGui") && mod.isToggled()) {
 
                         posX = sr.getScaledWidth() - fr.getStringWidth(mod.getName()) - 2 + modulesPosX;
-                        fr.drawStringWithShadow(mod.getName(), posX, posY, textColor);
+                        fr.drawStringWithShadow(mod.getName(), posX, posY, Colors.getModuleColor().getRGB());
 
                         posY += fr.FONT_HEIGHT;
                         counter[0]++;

@@ -1,5 +1,6 @@
 package philipp.it.me.phil.Me;
 
+import javafx.scene.control.Tab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.ICommand;
@@ -26,10 +27,13 @@ import philipp.it.me.phil.Me.module.keystrokes.render.KeystrokesRenderer;
 import philipp.it.me.phil.Me.module.player.FollowEntity;
 import philipp.it.me.phil.Me.module.player.NoFall;
 import philipp.it.me.phil.Me.module.pvp.Killaura;
+import philipp.it.me.phil.Me.module.render.TabGUI;
 import philipp.it.me.phil.Me.module.render.TabGUIToggle;
 import philipp.it.me.phil.Me.ui.Hud;
 import philipp.it.me.phil.Me.ui.clickgui.ClickGuiToggle;
+import philipp.it.me.phil.Me.ui.customize.Colors;
 import philipp.it.me.phil.Me.ui.customize.CustomizeScreenToggle;
+import philipp.it.me.phil.Me.utils.ConfigHandler;
 import philipp.it.me.phil.Me.utils.Reference;
 
 import java.awt.*;
@@ -134,6 +138,77 @@ public class Mod {
         onEvent(new EventKey(key));
     }
 
+    //load config
+    @net.minecraftforge.fml.common.Mod.EventHandler
+    public void onInitialization(FMLPostInitializationEvent event) {
+
+
+        Hud.modulesPosX = ConfigHandler.getInt("Modules", "posX");
+        Hud.modulesPosY = ConfigHandler.getInt("Modules", "posY");
+
+        Hud.FpsX = ConfigHandler.getInt("Fps", "posX");
+        Hud.FpsY = ConfigHandler.getInt("Fps", "posY");
+
+        TabGUI.guiPosX = ConfigHandler.getInt("TabGui", "posX");
+        TabGUI.guiPosY = ConfigHandler.getInt("TabGui", "posY");
+
+        Hud.CordX = ConfigHandler.getInt("Coord", "posX");
+        Hud.CordY = ConfigHandler.getInt("Coord", "posY");
+
+
+    }
+
+    @net.minecraftforge.fml.common.Mod.EventHandler
+    public void init(FMLPreInitializationEvent event) {
+        if (!ConfigHandler.hasCategory("TabGui") && !ConfigHandler.hasCategory("Fps") && !ConfigHandler.hasCategory("Coord") && !ConfigHandler.hasCategory("Modules") && !ConfigHandler.hasCategory("Colors")) {
+            //Positions
+            ConfigHandler.writeConfig("TabGui", "posX", 10);
+            ConfigHandler.writeConfig("TabGui", "posY", 35);
+
+            ConfigHandler.writeConfig("Fps", "posX", 5);
+            ConfigHandler.writeConfig("Fps", "posY", 565);
+
+            ConfigHandler.writeConfig("Coord", "posX", 5);
+            ConfigHandler.writeConfig("Coord", "posY", 583);
+
+            ConfigHandler.writeConfig("Modules", "posX", 0);
+            ConfigHandler.writeConfig("Modules", "posY", 0);
+
+            //Colors
+            ConfigHandler.writeConfig("TextColor", "White" , "255,255,255");
+
+            ConfigHandler.writeConfig("TextColor", "Red" , "255,0,0");
+
+            ConfigHandler.writeConfig("TextColor", "Green" , "0,255,0");
+
+            ConfigHandler.writeConfig("TextColor", "Blue" , "0,0,255");
+
+            ConfigHandler.writeConfig("TextColor", "Yellow" , "0,255,255");
+
+            ConfigHandler.writeConfig("TextColor", "Orange" , "255,100,0");
+
+            ConfigHandler.writeConfig("TextColor", "Turquoise" , "0,255,234");
+
+            ConfigHandler.writeConfig("TextColor", "Purple" , "100,0,255");
+
+            ConfigHandler.writeConfig("TextColor", "Pink" , "255,0,255");
+
+            ConfigHandler.writeConfig("BackGroundColor", "Background" , "0x30000000");
+
+            ConfigHandler.writeConfig("Color", "Tabgui", 1);
+
+            ConfigHandler.writeConfig("Color", "Module", 1);
+
+            ConfigHandler.writeConfig("Color", "Fps", 1);
+
+            ConfigHandler.writeConfig("Color", "Coord", 1);
+
+
+        }
+        Colors.loadColors();
+
+    }
+
 
     //todo Keystrokes
 
@@ -141,17 +216,17 @@ public class Mod {
     private static KeystrokesRenderer renderer;
     private static boolean openGui;
 
-    /*@net.minecraftforge.fml.common.Mod.EventHandler
+    @net.minecraftforge.fml.common.Mod.EventHandler
     public void initt(final FMLInitializationEvent event) throws IOException {
-        settings = new KeystrokesSettings(new File(Minecraft.getMinecraft().gameDir, "keystrokes.dat"));
-        renderer = new KeystrokesRenderer();
-        settings.load();
+        //settings = new KeystrokesSettings(new File(Minecraft.getMinecraft().gameDir, "keystrokes.dat"));
+        //renderer = new KeystrokesRenderer();
+        //settings.load();
         ClientCommandHandler.instance.registerCommand((ICommand)new TestCommand());
-        ClientCommandHandler.instance.registerCommand((ICommand)new CommandKeystrokes());
-        MinecraftForge.EVENT_BUS.register(new KeystrokesRenderer());
+        //ClientCommandHandler.instance.registerCommand((ICommand)new CommandKeystrokes());
+        //MinecraftForge.EVENT_BUS.register(new KeystrokesRenderer());
     }
 
-     */
+
 
     @SubscribeEvent
     public void onClientTick(final TickEvent.ClientTickEvent event) {

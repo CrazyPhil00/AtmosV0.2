@@ -16,7 +16,7 @@ public class Sprint extends Module {
 
 
 
-    //private static final int SPRINT_KEY = Minecraft.getMinecraft().gameSettings.keyBindSprint.getKeyCode();
+    private static final int SPRINT_KEY = Minecraft.getMinecraft().gameSettings.keyBindSprint.getKeyCode();
 
 
     public Sprint() {
@@ -29,7 +29,7 @@ public class Sprint extends Module {
     @SubscribeEvent
     public void ontick(TickEvent.PlayerTickEvent event) {
         if (this.isToggled()) {
-            //KeyBinding.setKeyBindState(SPRINT_KEY, true);
+            KeyBinding.setKeyBindState(SPRINT_KEY, true);
         }
     }
 }
