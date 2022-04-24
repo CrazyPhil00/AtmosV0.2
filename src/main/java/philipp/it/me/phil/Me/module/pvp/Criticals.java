@@ -25,15 +25,10 @@ public class Criticals extends Module {
     public void onDisable() {
         MinecraftForge.EVENT_BUS.unregister(this);
     }
-    @SubscribeEvent
-    public void onSwing(AttackEntityEvent event) {
 
-        doMiniJump();
 
-    }
 
-    private void doMiniJump()
-    {
+    private void doMiniJump() {
         mc.player.jump();
         mc.player.onGround = false;
     }

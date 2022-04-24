@@ -21,7 +21,8 @@ import javax.annotation.Nonnull;
 
 public class Tower extends Module {
     public Tower() {
-        super("Tower", "Build's up really fast", Category.WORLD, false, "Vanilla" , "Vanilla", "Test");
+        super("Tower", "Build's up really fast", Category.WORLD, false, "Vanilla" , "Vanilla", "NCP", "Custom");
+        this.setDelaySetting(true);
     }
 
     @Override
@@ -31,6 +32,8 @@ public class Tower extends Module {
 
     @Override
     public void onDisable() {
+        super.onDisable();
+        Minecraft.getMinecraft().player.rotationPitch = 0;
         MinecraftForge.EVENT_BUS.unregister(this);
     }
 
@@ -39,8 +42,10 @@ public class Tower extends Module {
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = Minecraft.getMinecraft().player;
-        if (t >= 5) {
+        if (t == 5) player.jump();
+        if (t >= (getMode().equalsIgnoreCase("Vanilla") ? 10 : getMode().equalsIgnoreCase("NCP") ? 20 : getDelay())) {
             player.rotationPitch = 90;
+
             if (doPick(new ItemStack(Item.getItemById(3)))) LeftClick.rightclick();
 
             t = 0;

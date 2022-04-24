@@ -195,13 +195,13 @@ public class Mod {
 
             ConfigHandler.writeConfig("BackGroundColor", "Background" , "0x30000000");
 
-            ConfigHandler.writeConfig("Color", "Tabgui", 1);
+            ConfigHandler.writeConfig("Color", "Tabgui", 7);
 
-            ConfigHandler.writeConfig("Color", "Module", 1);
+            ConfigHandler.writeConfig("Color", "Module", 7);
 
-            ConfigHandler.writeConfig("Color", "Fps", 1);
+            ConfigHandler.writeConfig("Color", "Fps", 7);
 
-            ConfigHandler.writeConfig("Color", "Coord", 1);
+            ConfigHandler.writeConfig("Color", "Coord", 7);
 
 
         }

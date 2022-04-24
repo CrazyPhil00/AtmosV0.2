@@ -12,8 +12,7 @@ import java.awt.*;
 
 public class Aimbot extends Module {
     public Aimbot() {
-        super("Aimbot" , "Aimbot" , Category.COMBAT, false, "Test" , "Vanilla", "Test");
-        this.setKey(Keyboard.KEY_F10);
+        super("Aimbot" , "Aimbot" , Category.COMBAT, false, "Test" , "Vanilla");
     }
 
 

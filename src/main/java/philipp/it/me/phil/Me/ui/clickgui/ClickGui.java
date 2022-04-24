@@ -142,10 +142,12 @@ public class ClickGui extends GuiScreen {
                                 //delay settings
                                 if (mouseButton == 0) {
                                     if (isShiftKeyDown()) m.setDelay(m.getDelay() + 5);
+                                    else if (isCtrlKeyDown()) m.setDelay(m.getDelay() + 1);
                                     else m.setDelay(m.getDelay() + 10);
                                 }
                                 if (mouseButton == 1) {
                                     if (isShiftKeyDown()) m.setDelay(m.getDelay() - 5);
+                                    else if (isCtrlKeyDown()) m.setDelay(m.getDelay() - 1);
                                     else m.setDelay(m.getDelay() - 10);
                                 }
                             }

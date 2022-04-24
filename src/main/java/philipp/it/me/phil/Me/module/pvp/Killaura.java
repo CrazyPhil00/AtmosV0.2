@@ -43,11 +43,12 @@ public class Killaura extends Module {
     double range = this.getRange();
 
     public Killaura() {
-        super("Killaura" , "Automatically attacks Entities in distance" , Category.COMBAT, false, "NCP" , "Vanilla", "NCP", "Custom", "AAC");
+        super("Killaura" , "Automatically attacks Entities in distance" , Category.COMBAT, false, "Custom" , "Vanilla", "NCP", "Custom", "AAC");
         this.setKey(Keyboard.KEY_K);
         this.setRangeSetting(true);
         this.setModeSetting(true);
         this.setDelaySetting(true);
+        this.setDelay(5);
     }
 
     private float yaw;
@@ -73,22 +74,23 @@ public class Killaura extends Module {
                         EntityPlayer player = Minecraft.getMinecraft().player;
                         if (player.getDistance(o) <= range) {
                             if (!(o == player)) {
+                                if (!o.isInvisible()) {
+                                    if (!o.isDead) {
+                                        if (!o.getIsInvulnerable()) {
 
-                                //player.rotationYaw = rotations(o) [0];
-                                //player.rotationPitch = rotations(o) [1];
-                                //player.getEntityBoundingBox().getCenter();
+                                            //player.rotationYaw = rotations(o) [0];
+                                            //player.rotationPitch = rotations(o) [1];
+                                            //player.getEntityBoundingBox().getCenter();
+                                            Minecraft.getMinecraft().playerController.attackEntity(player, o);
+                                            //player.rotationYaw = (player.rotationYaw -o.rotationYaw);
+                                            player.swingArm(EnumHand.MAIN_HAND);
+                                            //final float[] rotation = executeRotations(o, mc.player);
+                                            //mc.player.rotationYaw = rotation[0];
+                                            //mc.player.rotationPitch = rotation[1];
 
-                                Minecraft.getMinecraft().playerController.attackEntity(player, o);
-                                    //player.rotationYaw = (player.rotationYaw -o.rotationYaw);
-                                player.swingArm(EnumHand.MAIN_HAND);
-                                //final float[] rotation = executeRotations(o, mc.player);
-
-                                //mc.player.rotationYaw = rotation[0];
-                                //mc.player.rotationPitch = rotation[1];
-
-
-
-
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
