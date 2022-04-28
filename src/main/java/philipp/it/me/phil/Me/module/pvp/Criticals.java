@@ -17,7 +17,8 @@ public class Criticals extends Module {
     @Override
     public void onEnable() {
         MinecraftForge.EVENT_BUS.register(this);
-        doMiniJump();
+
+
 
     }
 

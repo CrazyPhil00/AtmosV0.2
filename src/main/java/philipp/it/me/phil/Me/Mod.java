@@ -1,6 +1,5 @@
 package philipp.it.me.phil.Me;
 
-import javafx.scene.control.Tab;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.command.ICommand;
@@ -20,7 +19,6 @@ import philipp.it.me.phil.Me.listener.EventKey;
 import philipp.it.me.phil.Me.module.Category;
 import philipp.it.me.phil.Me.module.Module;
 import philipp.it.me.phil.Me.module.ModuleManager;
-import philipp.it.me.phil.Me.module.keystrokes.CommandKeystrokes;
 import philipp.it.me.phil.Me.module.keystrokes.KeystrokesSettings;
 import philipp.it.me.phil.Me.module.keystrokes.render.GuiScreenKeystrokes;
 import philipp.it.me.phil.Me.module.keystrokes.render.KeystrokesRenderer;
@@ -34,10 +32,11 @@ import philipp.it.me.phil.Me.ui.clickgui.ClickGuiToggle;
 import philipp.it.me.phil.Me.ui.customize.Colors;
 import philipp.it.me.phil.Me.ui.customize.CustomizeScreenToggle;
 import philipp.it.me.phil.Me.utils.ConfigHandler;
+import philipp.it.me.phil.Me.utils.PlayerTickHandler;
 import philipp.it.me.phil.Me.utils.Reference;
+import philipp.it.me.phil.Me.utils.RenderWorldLastHandler;
 
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +46,7 @@ import java.util.List;
 
 public class Mod {
 
+    public static String MODID = Reference.MOD_ID;
     public static ModuleManager moduleManager;
     public static Hud hud;
     public ClickGuiToggle clickGui;
@@ -75,6 +75,9 @@ public class Mod {
         MinecraftForge.EVENT_BUS.register(new Hud());
         MinecraftForge.EVENT_BUS.register(new Killaura());
         MinecraftForge.EVENT_BUS.register(new NoFall());
+        MinecraftForge.EVENT_BUS.register(new PlayerTickHandler());
+        MinecraftForge.EVENT_BUS.register(new RenderWorldLastHandler());
+
 
         TabGUIToggle tabGUIToggle = new TabGUIToggle();
         tabGUIToggle.setToggled(true);

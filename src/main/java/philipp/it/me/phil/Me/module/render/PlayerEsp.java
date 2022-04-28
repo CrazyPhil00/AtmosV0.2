@@ -4,15 +4,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
 import org.lwjgl.opengl.GL11;
 import philipp.it.me.phil.Me.module.Category;
 import philipp.it.me.phil.Me.module.Module;
-import philipp.it.me.phil.Me.utils.RenderUtils;
+import philipp.it.me.phil.Me.utils.RenderUtil;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,28 +18,26 @@ public class PlayerEsp extends Module {
 
     }
 
-    private transient int BOX = 0;
     private transient List<Entity> ENTITIES = new ArrayList<Entity>();
+    private transient int BOX = 0;
+
 
     @Override
-    public void onEnable() throws AWTException {
-        super.onEnable();
+    public void onEnable() {
         BOX = GL11.glGenLists(1);
         GL11.glNewList(BOX, GL11.GL_COMPILE);
-        RenderUtils.drawOutlinedBox(new AxisAlignedBB(-0.5, 0, -0.5, 0.5, 1, 0.5));
+        RenderUtil.drawOutlinedBox(new AxisAlignedBB(-0.5, 0, -0.5, 0.5, 1, 0.5));
         GL11.glEndList();
-        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
         GL11.glDeleteLists(BOX, 1);
-        MinecraftForge.EVENT_BUS.unregister(this);
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.PlayerTickEvent e) {
+    @Override
+    public void onLocalPlayerUpdate() {
         ENTITIES.clear();
         for (EntityPlayer entity : Minecraft.getMinecraft().world.playerEntities) {
             if (entity.isDead || entity.getHealth() < 0)
@@ -56,8 +50,7 @@ public class PlayerEsp extends Module {
         }
     }
 
-
-
+    @Override
     public void onRenderWorldLast(float partialTicks) {
         GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_LINE_BIT | GL11.GL_CURRENT_BIT);
 
@@ -74,9 +67,8 @@ public class PlayerEsp extends Module {
                 -Minecraft.getMinecraft().getRenderManager().viewerPosY,
                 -Minecraft.getMinecraft().getRenderManager().viewerPosZ);
 
-        RenderUtils.drawESPBoxes(ENTITIES, BOX, partialTicks);
-        //if (tracers.value)
-            RenderUtils.drawESPTracers(ENTITIES);
+        RenderUtil.drawESPBoxes(ENTITIES, BOX, partialTicks);
+
 
         GL11.glPopMatrix();
 

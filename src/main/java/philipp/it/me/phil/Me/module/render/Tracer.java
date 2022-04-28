@@ -1,7 +1,10 @@
 package philipp.it.me.phil.Me.module.render;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -9,94 +12,79 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import philipp.it.me.phil.Me.module.Category;
 import philipp.it.me.phil.Me.module.Module;
+import philipp.it.me.phil.Me.utils.RenderUtil;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Tracer extends Module {
     public Tracer() {
-        super("Tracers" , "Tracers" , Category.RENDER, false, "Test" , "Vanilla", "Test");
+        super("Tracers" , "Draws Lines" , Category.RENDER, false, "Test" , "Vanilla", "Test");
         this.setKey(Keyboard.KEY_8);
     }
 
+    private transient List<Entity> ENTITIES = new ArrayList<Entity>();
+    private transient int BOX = 0;
+
+    boolean isViewBobbing =  Minecraft.getMinecraft().gameSettings.viewBobbing;
+
     @Override
     public void onEnable() throws AWTException {
-        super.onEnable();
-        MinecraftForge.EVENT_BUS.register(this);
+        Minecraft.getMinecraft().gameSettings.viewBobbing = false;
+        BOX = GL11.glGenLists(1);
+        GL11.glNewList(BOX, GL11.GL_COMPILE);
+        RenderUtil.drawOutlinedBox(new AxisAlignedBB(-0.5, 0, -0.5, 0.5, 1, 0.5));
+        GL11.glEndList();
     }
 
     @Override
     public void onDisable() {
+        if (isViewBobbing) {
+            Minecraft.getMinecraft().gameSettings.viewBobbing = true;
+        }
         super.onDisable();
-        MinecraftForge.EVENT_BUS.unregister(this);
+        GL11.glDeleteLists(BOX, 1);
     }
 
-    @SubscribeEvent
-    public void onTick(TickEvent.ServerTickEvent event) {
-        if (this.isToggled()) {
-
+    @Override
+    public void onLocalPlayerUpdate() {
+        ENTITIES.clear();
+        for (Entity entity : Minecraft.getMinecraft().world.getLoadedEntityList()) {
+            if (entity.isDead)
+                continue;
+            if (entity == Minecraft.getMinecraft().player)
+                continue;
+            if (entity.isInvisible())
+                continue;
+            ENTITIES.add(entity);
         }
     }
 
-    public void drawPlayer(EntityLivingBase entity) {
+    @Override
+    public void onRenderWorldLast(float partialTicks) {
+        GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT | GL11.GL_LINE_BIT | GL11.GL_CURRENT_BIT);
 
-        float red = 0.5f;
-        float green = 0.5f;
-        float blue = 1f;
+        GL11.glDisable(GL11.GL_TEXTURE_2D);
+        GL11.glDisable(GL11.GL_DEPTH_TEST);
+        GL11.glDisable(GL11.GL_LIGHTING);
+        GL11.glEnable(GL11.GL_BLEND);
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+        GL11.glEnable(GL11.GL_LINE_SMOOTH);
+        GL11.glLineWidth(2);
 
-        double xpos = (entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosX;
-        double ypos = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosY;
-        double zpos = (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosZ;
+        GL11.glPushMatrix();
+        GL11.glTranslated(-Minecraft.getMinecraft().getRenderManager().viewerPosX,
+                -Minecraft.getMinecraft().getRenderManager().viewerPosY,
+                -Minecraft.getMinecraft().getRenderManager().viewerPosZ);
 
-        render(red, green , blue , xpos , ypos, zpos);
-    }
+        RenderUtil.drawESPTracers(ENTITIES);
 
-    public void drawAnimal(EntityLivingBase entity) {
+        GL11.glPopMatrix();
 
-        float red = 0.5f;
-        float green = 1f;
-        float blue = 0.5f;
-
-        double xpos = (entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosX;
-        double ypos = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosY;
-        double zpos = (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosZ;
-
-        render(red, green , blue , xpos , ypos, zpos);
-    }
-
-    public void drawMob(EntityLivingBase entity) {
-
-        float red = 1f;
-        float green = 0.5f;
-        float blue = 0.5f;
-
-        double xpos = (entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosX;
-        double ypos = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosY;
-        double zpos = (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosZ;
-
-        render(red, green , blue , xpos , ypos, zpos);
-    }
-
-    public void drawOther(EntityLivingBase entity) {
-
-        float red = 0.5f;
-        float green = 0.5f;
-        float blue = 0.5f;
-
-        double xpos = (entity.lastTickPosX + (entity.posX - entity.lastTickPosX) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosX;
-        double ypos = (entity.lastTickPosY + (entity.posY - entity.lastTickPosY) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosY;
-        double zpos = (entity.lastTickPosZ + (entity.posZ - entity.lastTickPosZ) * mc.getRenderPartialTicks()) - mc.getRenderManager().viewerPosZ;
-
-        render(red, green , blue , xpos , ypos, zpos);
-    }
-
-    public void render(float red, float green, float blue , double x, double y, double z) {
-
+        GL11.glPopAttrib();
     }
 
 
-    public static int rainbows(int delay) {
-        double rainbowstate = Math.ceil(System.currentTimeMillis() + delay) /20.0;
-        rainbowstate %= 360;
-        return Color.getHSBColor((float) (rainbowstate /360.0f) , 0.5f , 1f).getRGB();
-    }
+
 }

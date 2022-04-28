@@ -138,7 +138,7 @@ public class Module {
         return index == modes.indexOf(mode);
     }
 
-    public void cycle() {
+    public void cycleMode() {
         if (index < modes.size() -1) {
             index ++;
         }else index = 0;
@@ -202,5 +202,13 @@ public class Module {
     public void cycleBoolean(String booleanToCycle) {
         boolean bool = booleans.get(booleanToCycle);
         bool = !bool;
+    }
+
+    public void onLocalPlayerUpdate() {
+
+    }
+
+    public void onRenderWorldLast(float partialTicks) {
+
     }
 }

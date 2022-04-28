@@ -1,5 +1,7 @@
 package philipp.it.me.phil.Me.module;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.util.datafix.fixes.MinecartEntityTypes;
 import philipp.it.me.phil.Me.Mod;
 import philipp.it.me.phil.Me.module.exploits.Invisible;
 import philipp.it.me.phil.Me.module.movement.*;
@@ -25,6 +27,7 @@ public class ModuleManager {
         //player
         modules.add(new NoFall());
         modules.add(new InventoryCleaner());
+        modules.add(new Test());
         //render
         modules.add(new Backlook());
         modules.add(new Fullbright());

@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.lwjgl.Sys;
 import org.lwjgl.input.Keyboard;
 import philipp.it.me.phil.Me.module.Category;
 import philipp.it.me.phil.Me.module.Module;
@@ -40,55 +41,53 @@ public class Killaura extends Module {
 
 
     boolean animals,mobs,player;
-    double range = this.getRange();
+    double range;
+    long time;
+    double speed;
 
     public Killaura() {
-        super("Killaura" , "Automatically attacks Entities in distance" , Category.COMBAT, false, "Custom" , "Vanilla", "NCP", "Custom", "AAC");
+        super("Killaura" , "Automatically attacks Entities in distance" , Category.COMBAT, false, "Vanilla" , "Vanilla", "NCP", "Custom");
         this.setKey(Keyboard.KEY_K);
         this.setRangeSetting(true);
         this.setModeSetting(true);
         this.setDelaySetting(true);
-        this.setDelay(5);
+        this.setDelay(13);
     }
 
     private float yaw;
 
     private float pitch;
 
-    int t = 0;
     // ATTACKSPEED:
     // Sword: 60
     // AXE: 75
     int attackspeed = 65;
 
+    @Override
+    public void onEnable() throws AWTException {
+        time = System.currentTimeMillis();
+    }
+
+    @Override
+    public void onLocalPlayerUpdate() {
+        speed = 10;
+        if (System.currentTimeMillis() - time < 1000.0d / speed * this.getDelay()) return;
+        range = this.getRange();
+        if (this.isToggled()) {
+            for (Entity o : Minecraft.getMinecraft().world.getLoadedEntityList()) {
+                if (o instanceof EntityLivingBase) {
+                    EntityPlayer player = Minecraft.getMinecraft().player;
+                    if (player.getDistance(o) <= range) {
+                        if (!(o == player)) {
+                            if (!o.isInvisible()) {
+                                if (!o.isDead) {
+                                    if (!o.getIsInvulnerable()) {
 
 
-    @SubscribeEvent
-    public void onPlayerTick(TickEvent.PlayerTickEvent event) {
+                                        Minecraft.getMinecraft().playerController.attackEntity(player, o);
+                                        player.swingArm(EnumHand.MAIN_HAND);
 
-        if (t >= this.getDelay()) {
-            t = 0;
-            if (this.isToggled()) {
-                for (Entity o : Minecraft.getMinecraft().world.getLoadedEntityList()) {
-                    if (o instanceof EntityLivingBase) {
-                        EntityPlayer player = Minecraft.getMinecraft().player;
-                        if (player.getDistance(o) <= range) {
-                            if (!(o == player)) {
-                                if (!o.isInvisible()) {
-                                    if (!o.isDead) {
-                                        if (!o.getIsInvulnerable()) {
-
-                                            //player.rotationYaw = rotations(o) [0];
-                                            //player.rotationPitch = rotations(o) [1];
-                                            //player.getEntityBoundingBox().getCenter();
-                                            Minecraft.getMinecraft().playerController.attackEntity(player, o);
-                                            //player.rotationYaw = (player.rotationYaw -o.rotationYaw);
-                                            player.swingArm(EnumHand.MAIN_HAND);
-                                            //final float[] rotation = executeRotations(o, mc.player);
-                                            //mc.player.rotationYaw = rotation[0];
-                                            //mc.player.rotationPitch = rotation[1];
-
-                                        }
+                                        time = System.currentTimeMillis();
                                     }
                                 }
                             }
@@ -97,9 +96,7 @@ public class Killaura extends Module {
                 }
             }
         }
-        t ++;
     }
-
 
     public float[] executeRotations(Entity entity, EntityPlayer player) {
         double d0 = player.posX - entity.posX;

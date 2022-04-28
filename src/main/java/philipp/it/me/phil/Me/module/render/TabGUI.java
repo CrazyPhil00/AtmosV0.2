@@ -18,7 +18,7 @@ import philipp.it.me.phil.Me.ui.customize.CustomizeScreen;
 
 import java.awt.*;
 
-import static philipp.it.me.phil.Me.module.render.Tracer.rainbows;
+
 
 
 public class TabGUI extends Gui{

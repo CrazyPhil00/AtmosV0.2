@@ -134,7 +134,7 @@ public class ClickGui extends GuiScreen {
                             if (m.hasModeSetting()) {
                                 //mode settings
                                 if (mouseButton == 0) {
-                                    m.cycle();
+                                    m.cycleMode();
                                 }
                             }
                         } else if (mouseX >= delayPosX && mouseX <= delayPosX + fr.getStringWidth(String.valueOf(m.getDelay())) && mouseY >= delayPosY && mouseY <= delayPosY + 9) {
@@ -142,12 +142,12 @@ public class ClickGui extends GuiScreen {
                                 //delay settings
                                 if (mouseButton == 0) {
                                     if (isShiftKeyDown()) m.setDelay(m.getDelay() + 5);
-                                    else if (isCtrlKeyDown()) m.setDelay(m.getDelay() + 1);
+                                    //else if (isCtrlKeyDown()) m.setDelay(m.getDelay() + 1);
                                     else m.setDelay(m.getDelay() + 10);
                                 }
                                 if (mouseButton == 1) {
                                     if (isShiftKeyDown()) m.setDelay(m.getDelay() - 5);
-                                    else if (isCtrlKeyDown()) m.setDelay(m.getDelay() - 1);
+                                    //else if (isCtrlKeyDown()) m.setDelay(m.getDelay() - 1);
                                     else m.setDelay(m.getDelay() - 10);
                                 }
                             }

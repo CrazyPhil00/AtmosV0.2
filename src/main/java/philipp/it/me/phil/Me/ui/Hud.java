@@ -4,7 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import philipp.it.me.phil.Me.Mod;
@@ -115,6 +118,23 @@ public class Hud extends Gui {
         }
 
     }
+
+    @SubscribeEvent
+    public void renderGameOverlayEvent(RenderGameOverlayEvent event)
+    {
+        if(event.getType() == RenderGameOverlayEvent.ElementType.TEXT && Minecraft.getMinecraft().gameSettings.showDebugInfo)
+        {
+            EntityPlayer player = Minecraft.getMinecraft().player;
+            FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
+            Vec3d vec3 = player.getLookVec();
+            fontRenderer.drawStringWithShadow("X:"+(Math.abs(vec3.x)<-0.0001?0:String.format("%.4f",vec3.x)), 4, 160, 0xFFFFFF);
+            fontRenderer.drawStringWithShadow("Y:"+(Math.abs(vec3.y)<-0.0001?0:String.format("%.4f",vec3.y)), 4, 168, 0xFFFFFF);
+            fontRenderer.drawStringWithShadow("Z:"+(Math.abs(vec3.z)<-0.0001?0:String.format("%.4f",vec3.z)), 4, 176, 0xFFFFFF);
+            fontRenderer.drawStringWithShadow("yaw:"+player.rotationYaw, 4, 184, 0xFFFFFF);
+            fontRenderer.drawStringWithShadow("pitch:"+player.rotationPitch, 4, 192, 0xFFFFFF);
+        }
+    }
+
 
     public static int rainbows(int delay) {
         double rainbowstate = Math.ceil(System.currentTimeMillis() + delay) / 20.0;

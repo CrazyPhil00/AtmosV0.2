@@ -25,25 +25,33 @@ public class Tower extends Module {
         this.setDelaySetting(true);
     }
 
+    private ItemStack oldItem;
+
     @Override
     public void onEnable() {
         MinecraftForge.EVENT_BUS.register(this);
+        oldItem = new ItemStack(Minecraft.getMinecraft().player.inventory.getCurrentItem().getItem());
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
         Minecraft.getMinecraft().player.rotationPitch = 0;
+        doPick(oldItem);
         MinecraftForge.EVENT_BUS.unregister(this);
     }
 
     int t = 0;
+
+
+
 
     @SubscribeEvent
     public void onTick(TickEvent.PlayerTickEvent event) {
         EntityPlayer player = Minecraft.getMinecraft().player;
         if (t == 5) player.jump();
         if (t >= (getMode().equalsIgnoreCase("Vanilla") ? 10 : getMode().equalsIgnoreCase("NCP") ? 20 : getDelay())) {
+
             player.rotationPitch = 90;
 
             if (doPick(new ItemStack(Item.getItemById(3)))) LeftClick.rightclick();

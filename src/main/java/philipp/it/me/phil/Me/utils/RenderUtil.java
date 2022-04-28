@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.util.List;
 
-public class RenderUtils {
+public class RenderUtil {
     public static void drawOutlinedBox(AxisAlignedBB bb) {
         GL11.glBegin(GL11.GL_LINES);
         {
